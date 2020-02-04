@@ -1,0 +1,43 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(data.table)
+```
+
+```{r reading in data, include=FALSE}
+#read in data
+data <- fread("./o-ring-erosion-or-blowby.data")
+
+#establishing column names
+names(data) <- c("o-rings_at_risk", "o_rings_thermal_distress","temp", "psi", "order")
+```
+
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+### Figure one
+
+
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```
+
