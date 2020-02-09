@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Emily Arnold Assignment 3"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -9,35 +9,65 @@ output:
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(data.table)
+library(dplyr)
+library(tidyverse)
 ```
 
 ```{r reading in data, include=FALSE}
 #read in data
-data <- fread("./o-ring-erosion-or-blowby.data")
+data <- fread("./challenger-data.txt")
 
-#establishing column names
-names(data) <- c("o-rings_at_risk", "o_rings_thermal_distress","temp", "psi", "order")
 ```
 
 
-Column {data-width=650}
+Column {data-width=200}
 -----------------------------------------------------------------------
-### Figure one
+### Examining Figure One
 
+I began by looking into the variable indicating the number of rings in distress, based on the temperature at the time at launch. As first glance, things look pretty promising in Figure One since most of the recorded distress levels for the tests show 0 rings in distress! However, there are a few recorded instances of one ring being distressed, all of which occur around the 55-65 degrees temperature range, and the two observations indicating more than one ring in distress, at 75 degrees and below 55. 
+
+I'd like to look at one more chart here, using the damage index variable instead of just the number of distressed rings, and adding a trend line to project this out, so I can get an idea of what could happen if temperatures were below 50 degrees on launch day - a scenario this test data didn't seem to cover.
+
+### Examining Figure Two
+
+What Figure Two shows is a bit concerning, since the damage index increases above ten at 55 degrees and shows no sign of tapering. That implies that temperatures below the ones tested would only face more damage.
+
+Based on this second chart, I would definitely have recommended testing the launch at a temperature lower than 50 degrees a few times to assess additional safey measures.
+
+
+Column {data-width=600}
+-----------------------------------------------------------------------
+
+### Figure One
+
+```{r figure 1}
+data %>% 
+  ggplot(aes(x = launch_temp, y = o_rings_distress))+
+  geom_point()+
+  labs(x = "Temperature", y = "O Rings in Distress",
+  title = "O-Rings in Distress based on Launch Temperature", 
+  subtitle = "Source: University of California, Los Angeles")
+
+```
+
+### Figure Two
+
+
+```{r second figure}
+
+data %>% 
+  ggplot(., aes(x = launch_temp, y = damage_index))+
+  geom_point()+
+  geom_smooth()+
+  labs(x = "Temperature", y = "Damage Index",
+  title = "Damage Index based on Launch Temperature",
+  subtitle = "Source: University of California, Los Angeles")
+
+```
 
 
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Chart B
 
-```{r}
-
-```
-
-### Chart C
-
-```{r}
-
-```
 
